@@ -1,0 +1,30 @@
+<level name="Untitled" width="600" height="600" difficulty="hard" >
+	<layer name="default">
+		<object class="Image">
+			<image>
+				<filename>/Users/hectortoledo/Projects/level_editor/tests/cloud-images/big_pine.png</filename>
+				<x>10</x>
+				<y>20</y>
+			</image>
+		</object>
+		<object class="Image">
+			<image>
+				<filename>/Users/hectortoledo/Projects/level_editor/tests/cloud-images/big_pine.png</filename>
+				<x>220</x>
+				<y>20</y>
+			</image>
+		</object>
+		<object class="Image">
+			<image>
+				<filename>/Users/hectortoledo/Projects/level_editor/tests/cloud-images/big_pine.png</filename>
+				<x>420</x>
+				<y>20</y>
+			</image>
+		</object>
+		<object class="Player">
+			<x>50</x>
+			<y>334</y>
+			<speed>5</speed>
+		</object>
+	</layer>
+</level>

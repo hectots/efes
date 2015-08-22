@@ -1,0 +1,39 @@
+# Below is a list of tasks to be made for this project. It includes
+# bug fixes, new features and changes. Bug fixes will be marked as
+# [FIXME], new features as [NEW] and changes as [CHANGE]. Additional markers
+# will be added as progress is made on the items. Items that have been
+# completed will be mark with [DONE]. Items with a work in progress will be
+# marked as [ACTIVE]. Items ready for testing will be marked as [TESTING].
+# This list will be constantly changing throughout the life of the project.
+
+ - [DONE][FIXME] Remove dependency of a particular directory structure when reading files
+ - [DONE][FIXME] Clear content of the library when creating a new document.
+ - [DONE][FIXME] Fix keyboard shortcuts on Mac to use Command instead of Control.
+ - [DONE][FIXME] Resize canvas when level size is less than the current window size.
+ - [DONE][FIXME] Create a default layer in every new document.
+ - [FIXME] Delete doesn't always work as expected. Note: The problem might be 'cause of the canvas losing focus.
+ - [DONE][FIXME] Grid appears behind the graphics.
+ - [FIXME] Snap to grid options is not working properly.
+ - [FIXME] Adding attributes requires hitting Enter after entering the value.
+ - [DONE][CHANGE] Rewrite LevelWriter to make it more flexible and not dependable on .toXML() methods.
+ - [CHANGE] Define a simpler XML format for the project files.
+ - [CHANGE] Remove the win/lose conditions since it doesn't apply to every case.
+ - [CHANGE] Separate the GUI code from the functionality of the program maybe by using an MVC pattern.
+ - [DONE][CHANGE] Rewrite LevelWriter to allow it to write different file formats.
+ - [NEW] Add DnD functionality to the preview component in the Library panel.
+ - [NEW] Separate project files from published files.
+ 	-- A project file may be a zip containing the data used to recreate a level as well as the assets (images, audio, etc.) used.
+	-- Published files may be anything that makes sense to the client of level files. This may be a particular directory structure or a zipped file as well.
+ - [NEW] Make the LevelWriter flexible enough to write level files in different formats, e.g. XML, JSON, Lua.
+ - [DONE][NEW] Add the ability to add level attributes.
+ - [NEW] Add distinctive icons for objects such as Sprite and Trigger.
+ - [DONE][NEW] Add tools such as a brush to "paint" images on the canvas and a select tool to select multiple images at once.
+ - [DONE][NEW] Add support for JPEG and GIF files.
+ - [DONE][NEW] Add an overlay to a selected image in addition to the blue bounding box.
+ - [NEW] Add the ability to pass a filename through the command line and have the editor load the file.
+ - [NEW] Write a script to aid the process of compiling, running and packaging the project.
+ - [NEW] Implement undo/redo.
+ - [NEW] Implement copy/paste.
+ - [NEW] Add the ability to select multiple objects at once.
+ - [NEW] Add the ability to import multiple items in the library.
+ - [NEW] Add the ability to save and restore the library.
