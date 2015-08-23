@@ -17,21 +17,21 @@
  - [FIXME] Adding attributes requires hitting Enter after entering the value.
  - [DONE][CHANGE] Rewrite LevelWriter to make it more flexible and not dependable on .toXML() methods.
  - [CHANGE] Define a simpler XML format for the project files.
- - [CHANGE] Remove the win/lose conditions since it doesn't apply to every case.
+ - [DONE][CHANGE] Remove the win/lose conditions since it doesn't apply to every case.
  - [CHANGE] Separate the GUI code from the functionality of the program maybe by using an MVC pattern.
  - [DONE][CHANGE] Rewrite LevelWriter to allow it to write different file formats.
  - [NEW] Add DnD functionality to the preview component in the Library panel.
  - [NEW] Separate project files from published files.
  	-- A project file may be a zip containing the data used to recreate a level as well as the assets (images, audio, etc.) used.
 	-- Published files may be anything that makes sense to the client of level files. This may be a particular directory structure or a zipped file as well.
- - [NEW] Make the LevelWriter flexible enough to write level files in different formats, e.g. XML, JSON, Lua.
+ - [DONE][NEW] Make the LevelWriter flexible enough to write level files in different formats, e.g. XML, JSON, Lua.
  - [DONE][NEW] Add the ability to add level attributes.
  - [NEW] Add distinctive icons for objects such as Sprite and Trigger.
  - [DONE][NEW] Add tools such as a brush to "paint" images on the canvas and a select tool to select multiple images at once.
  - [DONE][NEW] Add support for JPEG and GIF files.
  - [DONE][NEW] Add an overlay to a selected image in addition to the blue bounding box.
  - [NEW] Add the ability to pass a filename through the command line and have the editor load the file.
- - [NEW] Write a script to aid the process of compiling, running and packaging the project.
+ - [DONE][NEW] Write a script to aid the process of compiling, running and packaging the project.
  - [NEW] Implement undo/redo.
  - [NEW] Implement copy/paste.
  - [NEW] Add the ability to select multiple objects at once.
