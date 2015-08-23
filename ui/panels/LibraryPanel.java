@@ -165,6 +165,7 @@ public class LibraryPanel extends JPanel {
 			
 			itemsListModel.addElement(newItem.toString());
 			itemsList.setSelectedIndex(libraryItems.size()-1);
+			itemsList.setTransferHandler(new LibraryTransferHandler(libraryItems));
 			
 			if (itemsListModel.getSize() == 1) {
 				validate();

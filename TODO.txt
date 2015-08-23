@@ -38,3 +38,5 @@
  - [NEW] Add the ability to import multiple items in the library.
  - [DONE][NEW] Add the ability to save and restore the library.
  - [FIXME] DnD is not working properly.
+ - [NEW] Add the ability to change the level dimensions.
+ - [NEW] Add the ability to show/hide a layer.

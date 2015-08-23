@@ -167,6 +167,8 @@ public class LevelReader {
 				imageProperty.getProperty("x").getValue());
 			graphicYPos = Integer.parseInt(
 				imageProperty.getProperty("y").getValue());
+			
+			graphicMetadata.setImage(imagePath);
 		}
 		else if (objectData.hasProperty("geometry")) {
 			CompositeProperty geometryProperty =
@@ -180,7 +182,7 @@ public class LevelReader {
 			graphicYPos = Integer.parseInt(
 				geometryProperty.getProperty("y").getValue());
 		}
-		else {
+		else {			
 			graphicXPos = Integer.parseInt(
 				objectData.getProperty("x").getValue());
 			graphicYPos = Integer.parseInt(

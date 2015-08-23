@@ -67,6 +67,8 @@ public class MainFrame extends JFrame {
 		registerListeners();
 		
 		setVisible(true);
+
+		newLevel();
 	}
 	
 	private LevelData getLevelData() {
@@ -100,6 +102,30 @@ public class MainFrame extends JFrame {
 	
 	public void setDirectory(String directoryPath) {
 		directory = new File(directoryPath);
+	}
+
+	private void newLevel() {
+		NewLevelDialog newDialog = new NewLevelDialog(null);
+		newDialog.setVisible(true);
+		if (newDialog.getOptionChoosed() == newDialog.OK_OPTION) {
+			int newWidth = newDialog.getLevelWidth();
+			int newHeight = newDialog.getLevelHeight();
+			Dimension canvasSize = new Dimension(newWidth, newHeight);
+			
+			setSaveFilePath("");
+			
+			setLevelData(new LevelData(
+				newDialog.getLevelName(),
+				newWidth,
+				newHeight));
+			
+			// Reset everything to default
+			gridViewItem.setSelected(false);
+			gridSnapItem.setSelected(false);
+			replaceCanvas(new CanvasPanel(canvasSize));
+			layersPanel.clearListModel();
+			libraryPanel.clearLibraryItems();
+		}
 	}
 	
 	private void openLevel() {
@@ -146,8 +172,8 @@ public class MainFrame extends JFrame {
 			if (option == JFileChooser.APPROVE_OPTION) {
 				File saveFile = fileChooser.getSelectedFile();
 				
-				if (!saveFile.getName().endsWith(".xml")) {
-					saveFile = new File(saveFile.getAbsolutePath() + ".xml");
+				if (!saveFile.getName().endsWith(".efes")) {
+					saveFile = new File(saveFile.getAbsolutePath() + ".efes");
 				}
 				
 				setSaveFilePath(saveFile.getAbsolutePath());
@@ -174,8 +200,8 @@ public class MainFrame extends JFrame {
 		if (option == JFileChooser.APPROVE_OPTION) {
 			File saveFile = fileChooser.getSelectedFile();
 		
-			if (!saveFile.getName().endsWith(".xml")) {
-				saveFile = new File(saveFile.getAbsolutePath() + ".xml");
+			if (!saveFile.getName().endsWith(".efes")) {
+				saveFile = new File(saveFile.getAbsolutePath() + ".efes");
 			}
 		
 			setSaveFilePath(saveFile.getAbsolutePath());
@@ -368,27 +394,7 @@ public class MainFrame extends JFrame {
 	private void registerListeners() {
 		newMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewLevelDialog newDialog = new NewLevelDialog(null);
-				newDialog.setVisible(true);
-				if (newDialog.getOptionChoosed() == newDialog.OK_OPTION) {
-					int newWidth = newDialog.getLevelWidth();
-					int newHeight = newDialog.getLevelHeight();
-					Dimension canvasSize = new Dimension(newWidth, newHeight);
-					
-					setSaveFilePath("");
-					
-					setLevelData(new LevelData(
-						newDialog.getLevelName(),
-						newWidth,
-						newHeight));
-					
-					// Reset everything to default
-					gridViewItem.setSelected(false);
-					gridSnapItem.setSelected(false);
-					replaceCanvas(new CanvasPanel(canvasSize));
-					layersPanel.clearListModel();
-					libraryPanel.clearLibraryItems();
-				}
+				newLevel();
 			}
 		});
 		

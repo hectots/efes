@@ -28,11 +28,11 @@ public class LibraryTransferHandler extends TransferHandler {
 			JList itemList = (JList)c;
 			int selectedIndex = itemList.getSelectedIndex();
 			
-			if (selectedIndex != -1) {
+			if (selectedIndex != -1 && libraryItems.get(selectedIndex) != null) {
 				return new GraphicTransferable(libraryItems.get(selectedIndex));
 			}
 		}
-		
+
 		return null;
 	}
 	
