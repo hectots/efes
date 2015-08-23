@@ -21,7 +21,7 @@
  - [CHANGE] Separate the GUI code from the functionality of the program maybe by using an MVC pattern.
  - [DONE][CHANGE] Rewrite LevelWriter to allow it to write different file formats.
  - [NEW] Add DnD functionality to the preview component in the Library panel.
- - [NEW] Separate project files from published files.
+ - [ACTIVE][NEW] Separate project files from published files.
  	-- A project file may be a zip containing the data used to recreate a level as well as the assets (images, audio, etc.) used.
 	-- Published files may be anything that makes sense to the client of level files. This may be a particular directory structure or a zipped file as well.
  - [DONE][NEW] Make the LevelWriter flexible enough to write level files in different formats, e.g. XML, JSON, Lua.
@@ -36,4 +36,5 @@
  - [NEW] Implement copy/paste.
  - [NEW] Add the ability to select multiple objects at once.
  - [NEW] Add the ability to import multiple items in the library.
- - [NEW] Add the ability to save and restore the library.
+ - [DONE][NEW] Add the ability to save and restore the library.
+ - [FIXME] DnD is not working properly.

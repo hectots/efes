@@ -3,6 +3,8 @@
 
 package io;
 
+import java.util.HashMap;
+
 import java.io.*;
 
 import java.awt.Dimension;
@@ -25,8 +27,10 @@ public class LevelReader {
 	private LayersPanel layersPanel;
 	private LibraryPanel libraryPanel;
 	private File levelFile;
+	private HashMap<String, GraphicMetadata> graphicMetadataByClass;
 	
 	public LevelReader() {
+		graphicMetadataByClass = new HashMap<String, GraphicMetadata>();
 		setLevelData(null);
 		setCanvasPanel(null);
 	}
@@ -148,8 +152,7 @@ public class LevelReader {
 	}
 	
 	private Graphic createGraphic(String className, ObjectData objectData) {
-		GraphicMetadata graphicMetadata = new GraphicMetadata();
-		graphicMetadata.setGraphicClass(className);
+		GraphicMetadata graphicMetadata = graphicMetadataByClass.get(className);
 		
 		int graphicXPos = 0;
 		int graphicYPos = 0;
@@ -164,9 +167,6 @@ public class LevelReader {
 				imageProperty.getProperty("x").getValue());
 			graphicYPos = Integer.parseInt(
 				imageProperty.getProperty("y").getValue());
-			
-			graphicMetadata.setGraphicType("Image");
-			graphicMetadata.setImage(imagePath);
 		}
 		else if (objectData.hasProperty("geometry")) {
 			CompositeProperty geometryProperty =
@@ -179,16 +179,8 @@ public class LevelReader {
 				geometryProperty.getProperty("x").getValue());
 			graphicYPos = Integer.parseInt(
 				geometryProperty.getProperty("y").getValue());
-			
-			graphicMetadata.setGraphicType("Trigger");
-			graphicMetadata.setWidth(width);
-			graphicMetadata.setHeight(height);
 		}
 		else {
-			graphicMetadata.setGraphicType("Sprite");
-			graphicMetadata.setWidth(100);
-			graphicMetadata.setHeight(100);
-			
 			graphicXPos = Integer.parseInt(
 				objectData.getProperty("x").getValue());
 			graphicYPos = Integer.parseInt(
@@ -199,8 +191,6 @@ public class LevelReader {
 		graphic.setObjectData(objectData);
 		graphic.setX(graphicXPos);
 		graphic.setY(graphicYPos);
-		
-		getLibraryPanel().addItem(graphicMetadata);
 		
 		return graphic;
 	}
@@ -261,6 +251,59 @@ public class LevelReader {
 		
 		return property;
 	}
+
+	private void readLibrary(Node libraryNode) {
+		libraryNode.normalize();
+
+		NodeList libraryChildren = libraryNode.getChildNodes();
+		for (int i = 0; i != libraryChildren.getLength(); i++) {
+			Node child = libraryChildren.item(i);
+			child.normalize();
+			
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+				String nodeName = child.getNodeName();
+
+				if (nodeName.equals("item")) {
+					readLibraryItem(child);
+				}
+			}
+		}
+	}
+
+	private void readLibraryItem(Node itemNode) {
+		GraphicMetadata graphicMetadata = new GraphicMetadata();
+		itemNode.normalize();
+
+		NodeList itemChildren = itemNode.getChildNodes();
+		for (int i = 0; i != itemChildren.getLength(); i++) {
+			Node child = itemChildren.item(i);
+			child.normalize();
+			
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+				String nodeName = child.getNodeName();
+				String nodeValue = XMLUtils.getValue(child);
+
+				if (nodeName.equals("itemType")) {
+					graphicMetadata.setGraphicType(nodeValue);
+				} else if (nodeName.equals("itemClass")) {
+					graphicMetadata.setGraphicClass(nodeValue);
+				} else if (nodeName.equals("image")) {
+					graphicMetadata.setImage(nodeValue);
+				} else if (nodeName.equals("width")) {
+					graphicMetadata.setWidth(Integer.parseInt(nodeValue));
+				} else if (nodeName.equals("height")) {
+					graphicMetadata.setHeight(Integer.parseInt(nodeValue));
+				}
+			}
+		}
+
+		String graphicClass = graphicMetadata.getGraphicClass();
+		if (!graphicMetadataByClass.containsKey(graphicClass)) {
+			graphicMetadataByClass.put(graphicClass, graphicMetadata);
+		}
+
+		getLibraryPanel().addItem(graphicMetadata);
+	}
 	
 	public void read(File file) {
 		Document document = getDocument(file);
@@ -268,6 +311,7 @@ public class LevelReader {
 		
 		if (document != null) {
 			readLevelData(document.getElementsByTagName("level").item(0));
+			readLibrary(document.getElementsByTagName("library").item(0));
 			
 			NodeList objects = document.getElementsByTagName("object");
 			

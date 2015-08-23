@@ -152,12 +152,12 @@ public class MainFrame extends JFrame {
 				
 				setSaveFilePath(saveFile.getAbsolutePath());
 				
-				LevelWriter.write(saveFile, DEFAULT_FORMAT, levelData, canvasPanel);
+				ProjectWriter.write(saveFile, levelData, canvasPanel, libraryPanel);
 				return option;
 			}
 		}
 		if (getSaveFilePath() != null) {
-			LevelWriter.write(new File(getSaveFilePath()), DEFAULT_FORMAT, levelData, canvasPanel);
+			ProjectWriter.write(new File(getSaveFilePath()), levelData, canvasPanel, libraryPanel);
 		}
 		return 1;
 	}
@@ -180,7 +180,7 @@ public class MainFrame extends JFrame {
 		
 			setSaveFilePath(saveFile.getAbsolutePath());
 		
-			LevelWriter.write(saveFile, DEFAULT_FORMAT, levelData, canvasPanel);
+			ProjectWriter.write(saveFile, levelData, canvasPanel, libraryPanel);
 			return option;
 		}
 		return option;

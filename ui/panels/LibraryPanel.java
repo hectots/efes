@@ -3,6 +3,7 @@
 
 package ui.panels;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import java.awt.*;
@@ -143,6 +144,10 @@ public class LibraryPanel extends JPanel {
 		}
 		
 		return null;
+	}
+
+	public List<GraphicMetadata> getItems() {
+		return libraryItems;
 	}
 	
 	public boolean addItem(GraphicMetadata newItem) {
