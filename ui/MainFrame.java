@@ -192,6 +192,7 @@ public class MainFrame extends JFrame {
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Flash XML", "fxml"));
 		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Lua XML", "lxml"));
+		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON", "json"));
 		
 		if (getDirectory() != null) {
 			fileChooser.setCurrentDirectory(new File(getDirectory()));
@@ -217,8 +218,6 @@ public class MainFrame extends JFrame {
 					+ "."
 					+ acceptableFileExtensions[0]);
 			}
-		
-			setSaveFilePath(saveFile.getAbsolutePath());
 
 			LevelFormat levelFormat = new XmlLevelFormat();
 
@@ -226,6 +225,8 @@ public class MainFrame extends JFrame {
 				levelFormat = new FlashXmlLevelFormat();
 			} else if (acceptableFileExtensions[0].equals("lxml")) {
 				levelFormat = new LuaXmlLevelFormat();
+			} else if (acceptableFileExtensions[0].equals("json")) {
+				levelFormat = new JsonLevelFormat();
 			}
 		
 			LevelWriter.write(saveFile, levelFormat, levelData, canvasPanel);
