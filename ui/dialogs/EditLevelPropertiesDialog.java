@@ -12,11 +12,17 @@ import base.LevelData;
 import ui.panels.PropertiesPanel;
 
 public class EditLevelPropertiesDialog extends JDialog {
+	private JTextField levelTextField;
+	private JTextField widthTextField;
+	private JTextField heightTextField;
+
 	private JButton okButton;
 	private JButton cancelButton;
 	private PropertiesPanel propertiesPanel;
 	
 	private int optionChoosed;
+
+	private boolean changedLevelSize;
 	
 	public final static int OK_OPTION = 1;
 	public final static int CANCEL_OPTION = 2;
@@ -26,14 +32,19 @@ public class EditLevelPropertiesDialog extends JDialog {
 	public EditLevelPropertiesDialog(Frame frame, LevelData levelData) {
 		super(frame, true);
 		
-		setSize(225, 325);
+		setSize(280, 385);
 		setTitle("Edit Level Properties");
+
+		setLevelData(levelData);
 		
 		initComponents();
 		registerListeners();
 		
 		setOptionChoosed(CANCEL_OPTION);
-		setLevelData(levelData);
+	}
+
+	public boolean getChangedLevelSize() {
+		return changedLevelSize;
 	}
 	
 	public int getOptionChoosed() {
@@ -50,11 +61,55 @@ public class EditLevelPropertiesDialog extends JDialog {
 	
 	private void setLevelData(LevelData levelData) {
 		this.levelData = levelData;
-		propertiesPanel.getProperties(this.levelData);
 	}
 	
 	private void initComponents() {
 		this.setLocationRelativeTo(null);
+
+		levelTextField = new JTextField(15);
+		widthTextField = new JTextField(5);
+		heightTextField = new JTextField(5);
+
+		levelTextField.setText(levelData.getName());
+		widthTextField.setText(String.valueOf(levelData.getWidth()));
+		heightTextField.setText(String.valueOf(levelData.getHeight()));
+		
+		JLabel levelNameLabel = new JLabel("Level Name ");
+		
+		JPanel levelPanel = new JPanel();
+		levelPanel.setLayout(
+			new BoxLayout(levelPanel, BoxLayout.X_AXIS));
+		
+		levelPanel.add(levelNameLabel);
+		levelPanel.add(levelTextField);
+		
+		JLabel widthLabel = new JLabel("Width ");
+		JLabel heightLabel = new JLabel("Height ");
+		
+		JPanel widthHeightPanel = new JPanel();
+		widthHeightPanel.setLayout(
+			new BoxLayout(widthHeightPanel, BoxLayout.X_AXIS));
+		
+		widthHeightPanel.add(widthLabel);
+		widthHeightPanel.add(widthTextField);
+		widthHeightPanel.add(Box.createHorizontalGlue());
+		widthHeightPanel.add(heightLabel);
+		widthHeightPanel.add(heightTextField);
+		
+		JPanel editLevelPanel = new JPanel();
+		editLevelPanel.setLayout(
+			new BoxLayout(
+				editLevelPanel,
+				BoxLayout.Y_AXIS));
+		
+		editLevelPanel.add(levelPanel);
+		editLevelPanel.add(widthHeightPanel);
+		
+		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		topPanel.add(editLevelPanel);
+
+		this.add(topPanel, BorderLayout.NORTH);
 		
 		okButton = new JButton("Ok");
 		cancelButton = new JButton("Cancel");
@@ -69,8 +124,9 @@ public class EditLevelPropertiesDialog extends JDialog {
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		
 		propertiesPanel = new PropertiesPanel();
+		propertiesPanel.getProperties(this.levelData);
 				
-		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		centerPanel.add(propertiesPanel);
 		
 		this.add(centerPanel, BorderLayout.CENTER);
@@ -82,6 +138,25 @@ public class EditLevelPropertiesDialog extends JDialog {
 		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String levelName = levelData.getName();
+				String levelWidth = String.valueOf(levelData.getWidth());
+				String levelHeight = String.valueOf(levelData.getHeight());
+
+				if (!levelName.equals(levelTextField.getText())) {
+					levelData.setName(levelTextField.getText());
+				} else if (!levelWidth.equals(widthTextField.getText()) ||
+						!levelHeight.equals(heightTextField.getText())) {
+					changedLevelSize = true;
+
+					int newWidth = Integer.parseInt(widthTextField.getText());
+					int newHeight = Integer.parseInt(heightTextField.getText());
+
+					levelData.setWidth(newWidth);
+					levelData.setHeight(newHeight);
+				} else {
+					changedLevelSize = false;
+				}
+
 				setOptionChoosed(OK_OPTION);
 				setVisible(false);
 			}

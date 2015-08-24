@@ -50,9 +50,6 @@ public class CanvasPanel extends JPanel
 		setGridSize(new Dimension(10, 10));
 		setSnapToGrid(false);
 		
-		setSize(size);
-		setMinimumSize(size);
-		setPreferredSize(size);
 		setViewSize(size);
 		
 		setBackground(Color.WHITE);
@@ -96,6 +93,10 @@ public class CanvasPanel extends JPanel
 	
 	public void setViewSize(Dimension size) {
 		viewSize = size;
+
+		setSize(size);
+		setMinimumSize(size);
+		setPreferredSize(size);
 	}
 	
 	public Graphic getSelectedGraphic() {

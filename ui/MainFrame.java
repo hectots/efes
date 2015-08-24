@@ -443,10 +443,14 @@ public class MainFrame extends JFrame {
 		
 		editLevelPropertiesItem.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				EditLevelPropertiesDialog EditLevelPropertiesDialog = new EditLevelPropertiesDialog(null, levelData);
-				EditLevelPropertiesDialog.setVisible(true);
-				if (EditLevelPropertiesDialog.getOptionChoosed() == EditLevelPropertiesDialog.OK_OPTION) {
-					// 
+				EditLevelPropertiesDialog editLevelPropertiesDialog = new EditLevelPropertiesDialog(null, levelData);
+				editLevelPropertiesDialog.setVisible(true);
+				if (editLevelPropertiesDialog.getOptionChoosed() == EditLevelPropertiesDialog.OK_OPTION) {
+					if (editLevelPropertiesDialog.getChangedLevelSize()) {
+						canvasPanel.setViewSize(new Dimension(levelData.getWidth(), levelData.getHeight()));
+						canvasContainerPanel.validate();
+						repaint();
+					}
 				}
 			}
 		});
