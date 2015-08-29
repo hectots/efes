@@ -21,19 +21,7 @@ public class CanvasPanel extends JPanel
 	private String currentLayer;
 	private HashMap<String, ArrayList<Graphic>> graphics;
 	private ArrayList<String> layers;
-	
-	private Graphic selectedGraphic;
-	
-	// private int selectedGraphicXWhenClicked;
-	// private int selectedGraphicYWhenClicked;
-	// private int mouseXOnSelectedWhenClicked;
-	// private int mouseYOnSelectedWhenClicked;
-	
-	private String selectedGraphicLayer;
-	
-	// private int snapPointX;
-	// private int snapPointY;
-	
+			
 	private boolean snapToGrid;
 	private Dimension gridSize;
 	private Dimension viewSize;
@@ -57,14 +45,11 @@ public class CanvasPanel extends JPanel
 		
 		graphics = new HashMap<String, ArrayList<Graphic>>();
 		layers = new ArrayList<String>();
-		selectedGraphic = null;
-		
+
 		setLayer("");
 		
 		setPropertiesPanel(propertiesPanel);
-		
-		setTool(new SelectTool(this));
-		
+				
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		addKeyListener(this);
@@ -78,6 +63,10 @@ public class CanvasPanel extends JPanel
 	
 	public void setPropertiesPanel(PropertiesPanel propertiesPanel) {
 		this.propertiesPanel = propertiesPanel;
+	}
+
+	public Tool getTool() {
+		return currentTool;
 	}
 	
 	public void setTool(Tool tool) {
@@ -98,27 +87,7 @@ public class CanvasPanel extends JPanel
 		setMinimumSize(size);
 		setPreferredSize(size);
 	}
-	
-	public Graphic getSelectedGraphic() {
-		return selectedGraphic;
-	}
-	
-	public void setSelectedGraphic(Graphic graphic) {
-		selectedGraphic = graphic;
 		
-		if (graphic != null) {
-			propertiesPanel.getProperties(graphic.getObjectData());
-		}
-	}
-	
-	public String getSelectedGraphicLayer() {
-		return selectedGraphicLayer;
-	}
-	
-	public void setSelectedGraphicLayer(String layer) {
-		selectedGraphicLayer = layer;
-	}
-	
 	// Returns the current layer name.
 	public String getLayer() {
 		return currentLayer;
@@ -235,9 +204,7 @@ public class CanvasPanel extends JPanel
 			}
 			
 			// Snap to grid
-			// graphic.setX(graphic.getX() - graphic.getX() % gridSize.width);
-			// graphic.setY(graphic.getY() - graphic.getY() % gridSize.height);
-			
+
 			graphics.get(layer).add(graphic);
 			repaint();
 		}
@@ -266,18 +233,7 @@ public class CanvasPanel extends JPanel
 	public void removeGraphic(Graphic graphic) {
 		removeGraphic(graphic, getLayer());
 	}
-	
-	public void removeSelectedGraphic() {
-		for (String layer : layers) {
-			int selectedGraphicIndex = graphics.get(layer).indexOf(getSelectedGraphic());
-			if (selectedGraphicIndex != -1) {
-				graphics.get(layer).remove(getSelectedGraphic());
-				setSelectedGraphic(null);
-				repaint();
-			}
-		}
-	}
-	
+		
 	public Graphic[] getGraphicsByLayer(String layer) {
 		if (graphics.containsKey(layer)) {
 			Graphic[] graphicsArray = new Graphic[graphics.get(layer).size()];
@@ -286,35 +242,15 @@ public class CanvasPanel extends JPanel
 		
 		return null;
 	}
-	
-	public void moveUpSelected() {
-		if (getSelectedGraphic() != null) {
-			ArrayList<Graphic> layer = graphics.get(selectedGraphicLayer);
-			int selectedGraphicIndex = layer.indexOf(getSelectedGraphic());
-			
-			if (selectedGraphicIndex > 0) {
-				Collections.swap(
-					layer, selectedGraphicIndex, selectedGraphicIndex - 1);
-			}
-			
-			repaint();
+
+	public ArrayList<Graphic> getGraphicsListByLayer(String layer) {
+		if (graphics.containsKey(layer)) {
+			return graphics.get(layer);
 		}
-	}
-	
-	public void moveDownSelected() {
-		if (getSelectedGraphic() != null) {
-			ArrayList<Graphic> layer = graphics.get(selectedGraphicLayer);
-			int selectedGraphicIndex = layer.indexOf(getSelectedGraphic());
-			
-			if (selectedGraphicIndex < layer.size() - 1) {
-				Collections.swap(
-					layer, selectedGraphicIndex, selectedGraphicIndex + 1);
-			}
-			
-			repaint();
-		}
-	}
 		
+		return null;
+	}
+			
 	private void drawGrid(Graphics2D g2d, boolean gridAvailable) {
 		if (gridAvailable) {
 			g2d.setColor(getGridColor());
@@ -336,97 +272,15 @@ public class CanvasPanel extends JPanel
 		requestFocusInWindow();
 	}
 	
-	public void mousePressed(MouseEvent e) {
-		// boolean found = false;
-		// ListIterator<String> layerIterator = 
-		// 	layers.listIterator(layers.size());
-		// while (layerIterator.hasPrevious()) {
-		// 	String layer = layerIterator.previous();
-		// 	ListIterator<Graphic> iterator =
-		// 		graphics.get(layer).listIterator(graphics.get(layer).size());
-		// 	
-		// 	while (iterator.hasPrevious()) {
-		// 		Graphic graphic = iterator.previous();
-		// 		int mouseX = e.getX();
-		// 		int mouseY = e.getY();
-		// 		
-		// 		if (graphic.onBounds(mouseX, mouseY)) {
-		// 			if (getSelectedGraphic() != null) {
-		// 				getSelectedGraphic().setSelected(false);
-		// 			}
-		// 			
-		// 			setSelectedGraphic(graphic);
-		// 			getSelectedGraphic().setSelected(true);
-		// 			
-		// 			found = true;
-		// 			
-		// 			selectedGraphicXWhenClicked = getSelectedGraphic().getX();
-		// 			selectedGraphicYWhenClicked = getSelectedGraphic().getY(); 
-		// 			mouseXOnSelectedWhenClicked = mouseX;
-		// 			mouseYOnSelectedWhenClicked = mouseY;
-		// 			
-		// 			selectedGraphicLayer = layer;
-		// 			
-		// 			break;
-		// 		}
-		// 	}
-		// 	
-		// 	if (found) {
-		// 		break;
-		// 	}
-		// }
-		// 
-		// if (!found) {
-		// 	if (getSelectedGraphic() != null) {
-		// 		getSelectedGraphic().setSelected(false);
-		// 	}
-		// 	
-		// 	setSelectedGraphic(null);
-		// }
-		// 
-		// repaint();
-	}
+	public void mousePressed(MouseEvent e) {}
 	
 	public void mouseReleased(MouseEvent e) {}
 	
-	public void mouseDragged(MouseEvent e) {
-		// if (selectedGraphic != null) {
-		// 	int newMouseX = selectedGraphicXWhenClicked + e.getX() - mouseXOnSelectedWhenClicked;
-		// 	int newMouseY = selectedGraphicYWhenClicked + e.getY() - mouseYOnSelectedWhenClicked;
-		// 	int moduleX = newMouseX % getGridSize().width;
-		// 	int moduleY = newMouseY % getGridSize().height;
-		// 	int snapPointX;
-		// 	int snapPointY;
-		// 
-		// 	if (moduleX < (getGridSize().width/2)) {
-		// 		snapPointX = newMouseX - moduleX;
-		// 	}
-		// 	else {
-		// 		snapPointX = newMouseX+(getGridSize().width-moduleX);	
-		// 	}
-		// 
-		// 	if (moduleY < (getGridSize().height/2)) {
-		// 		snapPointY = newMouseY - moduleY;
-		// 	}
-		// 	else {
-		// 		snapPointY = newMouseY+(getGridSize().height-moduleY);
-		// 	}
-		// 	
-		// 	getSelectedGraphic().setX(snapPointX);
-		// 	getSelectedGraphic().setY(snapPointY);
-		// 
-		// 	repaint();
-		// }
-	}
+	public void mouseDragged(MouseEvent e) {}
 	
 	public void mouseMoved(MouseEvent e) {}
 	
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE ||
-			e.getKeyCode() == KeyEvent.VK_DELETE) {
-			removeSelectedGraphic();
-		}
-	}
+	public void keyPressed(KeyEvent e) {}
 	
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
@@ -443,5 +297,9 @@ public class CanvasPanel extends JPanel
 		}
 		
 		drawGrid(g2d, getGridAvailability());
+
+		if (currentTool != null) {
+			currentTool.draw(g2d);
+		}
 	}
 }

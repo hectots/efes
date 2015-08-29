@@ -14,12 +14,21 @@ public class ToolsPanel extends JPanel {
 	// Panels
 	private CanvasPanel canvasPanel;
 	private LibraryPanel libraryPanel;
+	private PropertiesPanel propertiesPanel;
+
+	private Tool activeTool;
 	
-	public ToolsPanel(CanvasPanel cp, LibraryPanel lp) {
+	public ToolsPanel(CanvasPanel cp, LibraryPanel lp, PropertiesPanel pp) {
 		setCanvasPanel(cp);
 		setLibraryPanel(lp);
+		setPropertiesPanel(pp);
 		
 		initComponents();
+		switchToSelectTool();
+	}
+
+	public Tool getActiveTool() {
+		return activeTool;
 	}
 	
 	public void setCanvasPanel(CanvasPanel cp) {
@@ -29,22 +38,38 @@ public class ToolsPanel extends JPanel {
 	public void setLibraryPanel(LibraryPanel lp) {
 		libraryPanel = lp;
 	}
+
+	public void setPropertiesPanel(PropertiesPanel pp) {
+		propertiesPanel = pp;
+	}
+
+	public void switchToSelectTool() {
+		activeTool = new SelectTool(canvasPanel, propertiesPanel);
+		canvasPanel.setTool(activeTool);
+	}
+
+	public void switchToBrushTool() {
+		activeTool = new BrushTool(canvasPanel, libraryPanel);
+		canvasPanel.setTool(activeTool);
+	}
 	
 	private void initComponents() {
 		JPanel toolsContainerPanel = new JPanel();
 		toolsContainerPanel.setLayout(new GridLayout(2, 1));
 		
 		JToggleButton selectToolButton = new JToggleButton(new ImageIcon("images/move.png"));
+		selectToolButton.setSelected(true);
+
 		selectToolButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
-				canvasPanel.setTool(new SelectTool(canvasPanel));
+				switchToSelectTool();
 			}
 		});
 		
 		JToggleButton brushToolButton = new JToggleButton(new ImageIcon("images/brush.png"));
 		brushToolButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
-				canvasPanel.setTool(new BrushTool(canvasPanel, libraryPanel));
+				switchToBrushTool();
 			}
 		});
 		

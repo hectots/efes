@@ -20,6 +20,7 @@ import base.LevelData;
 
 import io.*;
 import io.formats.*;
+import ui.tools.*;
 
 public class MainFrame extends JFrame {
 	private JMenuItem newMenuItem;
@@ -125,6 +126,7 @@ public class MainFrame extends JFrame {
 			replaceCanvas(new CanvasPanel(canvasSize));
 			layersPanel.clearListModel();
 			libraryPanel.clearLibraryItems();
+			toolsPanel.switchToSelectTool();
 		}
 	}
 	
@@ -151,6 +153,7 @@ public class MainFrame extends JFrame {
 			
 			replaceCanvas(levelReader.getCanvasPanel());
 			setLevelData(levelReader.getLevelData());
+			toolsPanel.switchToSelectTool();
 			
 			topTabbedPane.removeAll();
 			topTabbedPane.addTab("Library", libraryPanel);
@@ -297,7 +300,7 @@ public class MainFrame extends JFrame {
 		canvasPanel = new CanvasPanel(CANVAS_DEFAULT_SIZE, propertiesPanel);
 		layersPanel = new LayersPanel(canvasPanel);
 		libraryPanel = new LibraryPanel();
-		toolsPanel = new ToolsPanel(canvasPanel, libraryPanel);
+		toolsPanel = new ToolsPanel(canvasPanel, libraryPanel, propertiesPanel);
 		
 		JPanel canvasInnerContainerPanel = new JPanel();
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -489,13 +492,21 @@ public class MainFrame extends JFrame {
 		
 		sendToBackItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				canvasPanel.moveUpSelected();
+				Tool activeTool = toolsPanel.getActiveTool();
+				if (activeTool instanceof SelectTool) {
+					SelectTool selectTool = (SelectTool)activeTool;
+					selectTool.moveUpSelected();
+				}
 			}
 		});
 		
 		sendToFrontItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				canvasPanel.moveDownSelected();
+				Tool activeTool = toolsPanel.getActiveTool();
+				if (activeTool instanceof SelectTool) {
+					SelectTool selectTool = (SelectTool)activeTool;
+					selectTool.moveDownSelected();
+				}
 			}
 		});
 	}

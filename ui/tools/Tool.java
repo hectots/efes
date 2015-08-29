@@ -64,4 +64,7 @@ public abstract class Tool implements
 	public void keyPressed(KeyEvent e) {}
 	public void keyReleased(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
+
+	// Draw
+	public void draw(Graphics2D g2d) {}
 }
