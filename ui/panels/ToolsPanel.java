@@ -57,7 +57,7 @@ public class ToolsPanel extends JPanel {
 		JPanel toolsContainerPanel = new JPanel();
 		toolsContainerPanel.setLayout(new GridLayout(2, 1));
 		
-		JToggleButton selectToolButton = new JToggleButton(new ImageIcon("images/move.png"));
+		JToggleButton selectToolButton = new JToggleButton(new ImageIcon("images/selection_tool.png"));
 		selectToolButton.setSelected(true);
 
 		selectToolButton.addActionListener(new ActionListener(){
@@ -66,7 +66,7 @@ public class ToolsPanel extends JPanel {
 			}
 		});
 		
-		JToggleButton brushToolButton = new JToggleButton(new ImageIcon("images/brush.png"));
+		JToggleButton brushToolButton = new JToggleButton(new ImageIcon("images/brush_tool.png"));
 		brushToolButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				switchToBrushTool();

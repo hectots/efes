@@ -34,10 +34,10 @@ public class LayersPanel extends JPanel {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		
-		addButton = new JButton(new ImageIcon("images/plus.png"));
-		removeButton = new JButton(new ImageIcon("images/minus.png"));
-		upButton = new JButton(new ImageIcon("images/up.png"));
-		downButton = new JButton(new ImageIcon("images/down.png"));
+		addButton = new JButton(new ImageIcon("images/add_layer.png"));
+		removeButton = new JButton(new ImageIcon("images/remove_layer.png"));
+		upButton = new JButton(new ImageIcon("images/layer_up.png"));
+		downButton = new JButton(new ImageIcon("images/layer_down.png"));
 		
 		layersListModel = new DefaultListModel();
 		layersList = new JList(layersListModel);

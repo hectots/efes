@@ -34,9 +34,11 @@
  - [DONE][NEW] Write a script to aid the process of compiling, running and packaging the project.
  - [NEW] Implement undo/redo.
  - [NEW] Implement copy/paste.
- - [NEW] Add the ability to select multiple objects at once.
+ - [DONE][NEW] Add the ability to select multiple objects at once.
  - [NEW] Add the ability to import multiple items in the library.
  - [DONE][NEW] Add the ability to save and restore the library.
  - [FIXME] DnD is not working properly.
  - [DONE][NEW] Add the ability to change the level dimensions.
  - [NEW] Add the ability to show/hide a layer.
+ - [NEW] Add a hand tool.
+ - [NEW] Add shorcuts for the tools.

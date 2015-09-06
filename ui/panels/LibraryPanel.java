@@ -46,8 +46,8 @@ public class LibraryPanel extends JPanel {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		
-		addButton = new JButton(new ImageIcon("images/plus.png"));
-		removeButton = new JButton(new ImageIcon("images/minus.png"));
+		addButton = new JButton(new ImageIcon("images/add.png"));
+		removeButton = new JButton(new ImageIcon("images/remove.png"));
 		
 		bottomPanel.add(addButton);
 		bottomPanel.add(removeButton);
